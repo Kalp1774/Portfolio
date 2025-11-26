@@ -2,7 +2,7 @@
 
 A personal portfolio website with a unique **Hacker / Linux Desktop** aesthetic. This project simulates an interactive operating system in the browser, complete with a boot sequence, terminal, file explorer, and functional applications.
 
-## 🚀 Features
+##  Features
 
 *   **Immersive Boot Sequence**: "Hacker-style" boot log animation with a "YOU ARE BEING WATCHED" security alert.
 *   **Interactive Desktop Environment**:
@@ -23,7 +23,7 @@ A personal portfolio website with a unique **Hacker / Linux Desktop** aesthetic.
     *   CRT monitor scanline styling.
     *   Glow effects and monospace fonts (Ubuntu, Fira Code).
 
-## 🛠️ Technologies Used
+##  Technologies Used
 
 *   **HTML5**: Structure and semantic markup.
 *   **CSS3**: Styling, animations, grid/flexbox layouts, and variables.
@@ -31,13 +31,13 @@ A personal portfolio website with a unique **Hacker / Linux Desktop** aesthetic.
 *   **Font Awesome**: Icons for the desktop and UI.
 *   **Google Fonts**: Ubuntu and Fira Code fonts.
 
-## 📦 How to Run
+##  How to Run
 
 1.  Clone or download this repository.
 2.  Open `index.html` in any modern web browser.
 3.  Enjoy the experience!
 
-## 📝 Customization
+##  Customization
 
 *   **Wallpaper**: Replace `assets/wallpaper.png` with your own image.
 *   **Profile Photo**: Replace `assets/profile.jpg` with your own photo.
@@ -45,3 +45,4 @@ A personal portfolio website with a unique **Hacker / Linux Desktop** aesthetic.
 
 ---
 *Agent ID: 47*
+
