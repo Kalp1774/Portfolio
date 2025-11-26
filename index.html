@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalp@Portfolio:~$</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Kalp@Portfolio:~$</title>
+        <link rel="stylesheet" href="style.css">
+        <!-- Font Awesome for Icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <!-- Google Fonts -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Fira+Code:wght@400;500&display=swap"
+            rel="stylesheet">
+    </head>
+
+<body>
+
+    <!-- Matrix Rain Canvas -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <!-- Boot Screen Overlay -->
+    <div id="boot-screen">
+        <div id="boot-terminal"></div>
+        <div id="hacker-popup">YOU ARE BEING WATCHED</div>
+    </div>
+
+    <!-- Main Desktop Container -->
+    <div id="desktop">
+        <!-- Desktop Icons -->
+        <div class="desktop-icons">
+            <div class="icon" data-app="about">
+                <i class="fa-regular fa-user"></i>
+                <span>About Me</span>
+            </div>
+            <div class="icon" data-app="projects">
+                <i class="fa-regular fa-folder-open"></i>
+                <span>Projects</span>
+            </div>
+            <div class="icon" data-app="terminal">
+                <i class="fa-solid fa-terminal"></i>
+                <span>Terminal</span>
+            </div>
+            <div class="icon" data-app="contact">
+                <i class="fa-regular fa-envelope"></i>
+                <span>Contact</span>
+            </div>
+            <div class="icon" data-app="snake">
+                <i class="fa-solid fa-gamepad"></i>
+                <span>Snake</span>
+            </div>
+            <div class="icon" data-app="paint">
+                <i class="fa-solid fa-paint-brush"></i>
+                <span>Paint</span>
+            </div>
+            <div class="icon" data-app="calculator">
+                <i class="fa-solid fa-calculator"></i>
+                <span>Calculator</span>
+            </div>
+            <div class="icon" data-app="tictactoe">
+                <i class="fa-solid fa-chess-board"></i>
+                <span>Tic-Tac-Toe</span>
+            </div>
+        </div>
+
+        <!-- Windows Container -->
+        <div id="windows-container"></div>
+
+        <!-- Taskbar -->
+        <div id="taskbar">
+            <div class="start-menu-btn">
+                <i class="fa-brands fa-linux"></i>
+            </div>
+            <div class="taskbar-apps" id="taskbar-apps">
+                <!-- Open apps will appear here -->
+            </div>
+            <div class="system-tray">
+                <span id="clock">12:00 PM</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Window Template (Hidden) -->
+    <template id="window-template">
+        <div class="window">
+            <div class="window-header">
+                <div class="window-title">Application</div>
+                <div class="window-controls">
+                    <button class="minimize-btn"><i class="fa-solid fa-minus"></i></button>
+                    <button class="maximize-btn"><i class="fa-regular fa-square"></i></button>
+                    <button class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            </div>
+            <div class="window-content"></div>
+        </div>
+    </template>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

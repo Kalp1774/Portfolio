@@ -1,0 +1,769 @@
+:root {
+    /* Ubuntu-like Color Palette */
+    --bg-color: #2c001e;
+    --taskbar-bg: rgba(0, 0, 0, 0.8);
+    --window-bg: #300a24;
+    --window-header-bg: #3e3e3e;
+    --text-color: #ffffff;
+    --accent-color: #e95420;
+    --selection-color: rgba(233, 84, 32, 0.5);
+    --terminal-bg: #000000;
+    --terminal-text: #00ff00;
+
+    /* Fonts */
+    --main-font: 'Ubuntu', sans-serif;
+    --mono-font: 'Fira Code', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+body {
+    font-family: var(--main-font);
+    background: url('assets/wallpaper.png') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+    padding: 20px;
+    color: var(--text-color);
+}
+
+/* Boot Screen */
+#boot-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 10000;
+    padding: 20px;
+    font-family: var(--mono-font);
+    color: #0f0;
+    overflow: hidden;
+    transition: opacity 0.5s ease-out;
+}
+
+#boot-terminal {
+    width: 100%;
+    height: 100%;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.boot-line {
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+#hacker-popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ff0000;
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 0 0 10px #ff0000;
+    display: none;
+    text-align: center;
+    border: 2px solid #ff0000;
+    padding: 20px;
+    background: black;
+    box-shadow: 0 0 20px #ff0000;
+    z-index: 10001;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.05);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+.desktop-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: fit-content;
+}
+
+.icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.2s;
+    color: #fff;
+    /* White text for icons */
+}
+
+.icon:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.icon i {
+    font-size: 32px;
+    margin-bottom: 5px;
+    color: #fff;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.icon span {
+    font-size: 14px;
+    text-align: center;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    color: #fff;
+    /* Ensure text is white */
+}
+
+/* Taskbar */
+#taskbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: var(--taskbar-bg);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    z-index: 1000;
+}
+
+.start-menu-btn {
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.taskbar-apps {
+    flex-grow: 1;
+    display: flex;
+    gap: 5px;
+    margin-left: 10px;
+}
+
+.taskbar-item {
+    padding: 5px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    border-bottom: 2px solid transparent;
+}
+
+.taskbar-item.active {
+    background: rgba(255, 255, 255, 0.2);
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.system-tray {
+    margin-left: auto;
+    font-size: 14px;
+    padding: 0 10px;
+}
+
+/* Windows */
+.window {
+    position: absolute;
+    top: 50px;
+    left: 100px;
+    width: 600px;
+    height: 400px;
+    background: var(--window-bg);
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    resize: both;
+    min-width: 300px;
+    min-height: 200px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.window.active {
+    z-index: 100;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+}
+
+.window.maximized {
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 0;
+}
+
+.window-header {
+    background: var(--window-header-bg);
+    padding: 8px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: grab;
+}
+
+.window-header:active {
+    cursor: grabbing;
+}
+
+.window-title {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.window-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.window-controls button {
+    background: none;
+    border: none;
+    color: #aaa;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+}
+
+.window-controls button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.window-controls .close-btn:hover {
+    background: #e95420;
+}
+
+.window-content {
+    flex-grow: 1;
+    background: rgba(44, 0, 30, 0.95);
+    overflow: auto;
+    position: relative;
+    user-select: text;
+    color: var(--text-color);
+    /* Allow text selection inside windows */
+}
+
+/* Terminal Specifics */
+.terminal-content {
+    background: var(--terminal-bg);
+    color: var(--terminal-text);
+    font-family: var(--mono-font);
+    padding: 10px;
+    height: 100%;
+    font-size: 14px;
+}
+
+.command-line {
+    display: flex;
+    gap: 5px;
+}
+
+.input-line {
+    background: transparent;
+    border: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+    flex-grow: 1;
+}
+
+/* File Explorer */
+.file-explorer-toolbar {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.path-bar {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 5px 10px;
+    border-radius: 4px;
+    flex-grow: 1;
+    font-family: var(--mono-font);
+    font-size: 14px;
+}
+
+.file-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+
+.file-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.file-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.file-item span {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 5px;
+    word-break: break-all;
+}
+
+/* Matrix Rain Canvas */
+#matrix-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    /* On top of everything */
+    pointer-events: none;
+    /* Let clicks pass through if we want, but usually matrix takes over */
+    display: none;
+    /* Hidden by default */
+    background: black;
+}
+
+/* Snake Game Styles */
+.snake-game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background-color: #222;
+    color: #0f0;
+    font-family: 'Fira Code', monospace;
+}
+
+#snake-board {
+    background-color: #000;
+    border: 2px solid #0f0;
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+    width: 400px;
+    height: 400px;
+}
+
+.snake-cell {
+    width: 100%;
+    height: 100%;
+}
+
+.snake-body {
+    background-color: #0f0;
+    border: 1px solid #000;
+}
+
+.snake-food {
+    background-color: #f00;
+    border-radius: 50%;
+}
+
+.snake-score {
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+.snake-controls-hint {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: #aaa;
+}
+
+/* Fake Hack Styles */
+.hack-output {
+    color: #0f0;
+    font-family: 'Fira Code', monospace;
+}
+
+.hack-progress-bar {
+    width: 100%;
+    background-color: #333;
+    height: 20px;
+    margin: 5px 0;
+}
+
+.hack-progress-fill {
+    height: 100%;
+    background-color: #0f0;
+    width: 0%;
+    transition: width 0.2s;
+}
+
+/* Paint App */
+.paint-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #fff;
+}
+
+.paint-toolbar {
+    padding: 10px;
+    background: #ddd;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+}
+
+.color-picker {
+    width: 30px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+}
+
+.brush-size {
+    width: 100px;
+}
+
+#paint-canvas {
+    flex-grow: 1;
+    cursor: crosshair;
+    background: #fff;
+    touch-action: none;
+}
+
+/* Calculator App */
+.calc-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #333;
+    padding: 10px;
+    color: white;
+    font-family: 'Fira Code', monospace;
+}
+
+.calc-display {
+    background: #222;
+    color: #0f0;
+    font-size: 2rem;
+    text-align: right;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.calc-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    flex-grow: 1;
+}
+
+.calc-btn {
+    background: #444;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.calc-btn:hover {
+    background: #555;
+}
+
+/* Tic-Tac-Toe App */
+.ttt-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: #222;
+    color: white;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.ttt-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    width: 80px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.file-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.file-item span {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 5px;
+    word-break: break-all;
+}
+
+/* Matrix Rain Canvas */
+#matrix-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    /* On top of everything */
+    pointer-events: none;
+    /* Let clicks pass through if we want, but usually matrix takes over */
+    display: none;
+    /* Hidden by default */
+    background: black;
+}
+
+/* Snake Game Styles */
+.snake-game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background-color: #222;
+    color: #0f0;
+    font-family: 'Fira Code', monospace;
+}
+
+#snake-board {
+    background-color: #000;
+    border: 2px solid #0f0;
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+    width: 400px;
+    height: 400px;
+}
+
+.snake-cell {
+    width: 100%;
+    height: 100%;
+}
+
+.snake-body {
+    background-color: #0f0;
+    border: 1px solid #000;
+}
+
+.snake-food {
+    background-color: #f00;
+    border-radius: 50%;
+}
+
+.snake-score {
+    margin-top: 10px;
+    font-size: 1.2rem;
+}
+
+.snake-controls-hint {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: #aaa;
+}
+
+/* Fake Hack Styles */
+.hack-output {
+    color: #0f0;
+    font-family: 'Fira Code', monospace;
+}
+
+.hack-progress-bar {
+    width: 100%;
+    background-color: #333;
+    height: 20px;
+    margin: 5px 0;
+}
+
+.hack-progress-fill {
+    height: 100%;
+    background-color: #0f0;
+    width: 0%;
+    transition: width 0.2s;
+}
+
+/* Paint App */
+.paint-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #fff;
+}
+
+.paint-toolbar {
+    padding: 10px;
+    background: #ddd;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+}
+
+.color-picker {
+    width: 30px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+}
+
+.brush-size {
+    width: 100px;
+}
+
+#paint-canvas {
+    flex-grow: 1;
+    cursor: crosshair;
+    background: #fff;
+    touch-action: none;
+}
+
+/* Calculator App */
+.calc-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #333;
+    padding: 10px;
+    color: white;
+    font-family: 'Fira Code', monospace;
+}
+
+.calc-display {
+    background: #222;
+    color: #0f0;
+    font-size: 2rem;
+    text-align: right;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.calc-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+    flex-grow: 1;
+}
+
+.calc-btn {
+    background: #444;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.calc-btn:hover {
+    background: #555;
+}
+
+/* Tic-Tac-Toe App */
+.ttt-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: #222;
+    color: white;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.ttt-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    background: #444;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.ttt-reset {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background: #e95420;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.ttt-cell {
+    width: 60px;
+    height: 60px;
+    background: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.ttt-cell:hover {
+    background: #444;
+}
+
+.ttt-cell.x {
+    color: #e95420;
+}
+
+.ttt-cell.o {
+    color: #0f0;
+}
